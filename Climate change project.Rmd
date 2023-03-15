@@ -1,0 +1,427 @@
+---
+title: "Project Climate Change"
+author: "Drishti"
+date: "2023-02-01"
+output:
+  html_document:
+    toc: yes
+    highlight: kate
+    theme: paper
+    df_print: default
+  pdf_document:
+    toc: yes
+    number_sections: yes
+    highlight: kate
+  word_document:
+    toc: yes
+---
+# Project
+
+## CO2 emissions 
+
+### Cleaning the data
+
+```{r}
+library(knitr)
+# Reading the csv file into a data frame
+co2_emissions_df <- read.csv("C:/Users/drish/OneDrive/Desktop/R files/Datasets/Climate change/CO2 emissions/CO2 emissions.csv")
+
+# Removing first 4 rows and columns by name
+co2_emissions_df<- co2_emissions_df[-(1:4),-(2:4)]
+
+# Writing the updated data frame back to the csv file
+write.csv(co2_emissions_df, "co2_emissions_edited.csv", row.names = FALSE)
+
+# Reading the updated csv file into a data frame
+co2_emissions_df <- read.csv("co2_emissions_edited.csv")
+
+# Printing the first few rows of the data frame
+head(co2_emissions_df)
+
+# Creating a vector of years
+years <- 1990:2019
+
+# Creating a vector of sums for each year
+sums <- colSums(co2_emissions_df[, 2:31],na.rm=TRUE)
+
+# Creating a new data frame with the years and sums
+co2_data_df <- data.frame(Year = years, Sum = sums);head(co2_data_df)
+
+```
+### Plotting the CO2 data
+```{r}
+# plotting the CO2 emissions data
+ 
+# Loading the ggplot2 package
+library(ggplot2)
+
+# Plotting the data
+ggplot(data = co2_data_df, aes(x = Year, y = Sum)) +
+  geom_line(color="maroon") +
+  xlab("Year") +
+  ylab("Total CO2 emissions") +
+  ggtitle("CO2 emissions by Year") +
+  theme_minimal() +
+  theme(plot.background = element_rect(fill = "#FCF6F5FF"))
+
+```
+
+#### INFERENCE 
+
+* This shows the increasing rate of CO2 emissions as the years pass by. This could be due to increase in industrialization, globalisation and other factors.
+
+* CO2 is the fourth most abundant gas in the earth's atmosphere. At room temperature, carbon dioxide (CO2) is a colourless, odourless, non-flammable gas, at other temperatures and pressures, carbon dioxide can be a liquid or a solid. Solid carbon dioxide is called dry ice because it slowly changes from a cold solid directly into a gas.
+
+* Carbon dioxide is a byproduct of normal cell function when it is breathed out of the body. CO2 is also produced when fossil fuels are burned or decaying vegetation. Surface soils can sometimes contain high concentrations of this gas, from decaying vegetation or chemical changes in the bedrock.
+
+* Carbon dioxide is Earth’s most important greenhouse gas: a gas that absorbs and radiates heat. Unlike oxygen or nitrogen (which make up most of our atmosphere), greenhouse gases absorb heat radiating from the Earth’s surface and re-release it in all directions—including back toward Earth’s surface. Without carbon dioxide, Earth’s natural greenhouse effect would be too weak to keep the average global surface temperature above freezing.
+
+* Here, we see the Carbon Dioxide emissions between the years 1990 and 2019 graphed using the scatter plot. It is evident that the emissions of the greenhouse gas mentioned above has been at a rise throughout.
+
+* An increase in the overall level of Carbon Dioxide in the atmosphere, causes the global temperature to rise. 
+
+* Therefore, global warming is the consequence of a surge in the CO2 level in the atmosphere.
+
+
+## Population
+### Cleaning data
+```{r}
+library(knitr)
+# Reading the csv file into a data frame
+pop_growth_df <- read.csv("C:/Users/drish/OneDrive/Desktop/R files/Datasets/Climate change/popgrowth/popgrowth.csv")
+
+# Removing first 4 rows and columns by name
+pop_growth_df<- pop_growth_df[-(1:4),-(2:3)]
+
+# Writing the updated data frame back to the csv file
+write.csv(pop_growth_df, "pop_growth_edited.csv", row.names = FALSE)
+
+# Reading the updated csv file into a data frame
+pop_growth_df <- read.csv("pop_growth_edited.csv"); 
+
+# Printing the first few rows of the data frame
+head(pop_growth_df)
+
+
+# Creating a vector of years
+years <- 1960:2021
+
+# Creating a vector of sums for each year
+sums <- colSums(pop_growth_df[, 3:64])
+
+# Creating a new data frame with the years and sums
+pop_data_df <- data.frame(Year = years, Sum = sums)
+head(pop_data_df)
+
+```
+
+### Plotting the population growth data
+```{r}
+# plotting the population growth
+ 
+# Loading the ggplot2 package
+library(ggplot2)
+
+# Plotting the data
+ggplot(data = pop_data_df, aes(x = Year, y = Sum)) +
+  geom_line(color="#990011FF") +
+  xlab("Year") +
+  ylab("Total world population") +
+  ggtitle("Population Growth by Year") +
+  theme_minimal() +
+  theme(plot.background = element_rect(fill = "#FCF6F5FF"))
+
+```
+
+
+#### INFERENCE 
+
+* The graph show a linear spontaneous increase in population over the years.
+
+* We see that there has been a constant increase in the total population growth between the years 1960 and 2020. 
+
+* Rapid population growth poses challenges for the environment and for economic development. Population pressures undermine food security, poverty alleviation, natural resource conservation, and human health. 
+
+* High fertility rates result from high levels of unplanned pregnancies and a significant unmet need for family planning services.
+
+* In low-income regions alone, 214 million women want to avoid pregnancy but are not using any form of modern contraception. 
+
+* Because population pressure increases emissions through the burning of fossil fuels, increased material extraction, deforestation, industrial agriculture, and other manufacturing processes, it’s important to advocate for policies that rapidly reduce those emissions and build resiliency in a changing climate, including the advancement of gender equity and access to reproductive healthcare.
+
+## GreenHouse gas Emissions
+### Cleaning the data
+```{r}
+# Reading the csv file into a data frame
+ghg_emissions_df <- read.csv("C:/Users/drish/OneDrive/Desktop/R files/Datasets/Climate change/ghgemissions.csv")
+
+# Removing first 4 rows and columns by name
+ghg_emissions_df<- ghg_emissions_df[-(1:4),-(3:4)]
+
+# Writing the updated data frame back to the csv file
+write.csv(ghg_emissions_df, "ghg_emissions_edited.csv", row.names = FALSE)
+
+# Reading the updated csv file into a data frame
+ghg_emissions_df <- read.csv("ghg_emissions_edited.csv")
+
+# Printing the first few rows of the data frame
+head(ghg_emissions_df)
+
+
+```
+
+
+### Plotting data on map
+```{r}
+
+x<- seq(1990,2019,1)
+y<- colSums(ghg_emissions_df[, 3:32], na.rm=TRUE)
+par(bg= "#E7E8D1")
+plot(x,y, xlab="YEAR",ylab="Greenhouse emissions", main="Greenhouse emissions over the years", lwd=3,lty= 3, type="l",col="maroon")
+
+```
+
+
+#### INFERENCE 
+
+* There has been an overall rise in the level of GreenHouse Gases in the atmosphere. 
+
+* The greenhouse effect is a natural phenomenon and is beneficial for us. Certain gases in the atmosphere retain part of the thermal radiation emitted by the Earth's surface after being heated by the sun, this maintains the planet's temperature at a level suitable for the development of life. 
+
+* Human action — through activities such as industry, intensive agriculture and livestock farming, or transport —, however, has increased the presence of these gases in the atmosphere — mainly, carbon dioxide and methane as a result of the burning of fossil fuels such as coal, oil or gas —, causing them to retain more heat and to increase the temperature on the planet. This is what we know as global warming.
+
+
+### Comparing GHG emissions (1990 vs 2019)
+```{r}
+library(knitr)
+# Removing NA values
+ghg_emissions_df<- na.omit(ghg_emissions_df)
+# Plotting the agricultural land data
+summary(ghg_emissions_df$X.2)
+summary(ghg_emissions_df$X.31)
+
+# Creating Box plots 
+# Loading the ggplot2 package
+library(ggplot2)
+library(gridExtra)
+# Create the first box plot
+box_plot_1 <- ggplot(data = ghg_emissions_df, aes(x = "Data.Source", y = X.2)) +
+  geom_boxplot(fill = "#876FAD") +
+  xlab("Countries") +
+  ylab("Greenhouse emissions in 1990") +
+  ggtitle("GHG emissions percentage") +
+  scale_fill_manual(values = c("red", "blue")) +
+  theme_minimal() +
+  theme(plot.background = element_rect(fill = "#F7F5DC"))+
+  scale_y_continuous(limits=c(0,5e+07))
+
+# Create the second box plot
+box_plot_2 <- ggplot(data = ghg_emissions_df, aes(x = "Data.Source", y = X.31)) +
+  geom_boxplot(fill = "#78AD83") +
+  xlab("Countries") +
+  ylab("Greenhouse emissions in 2019") +
+  ggtitle("GHG emissions percentage") +
+  scale_fill_manual(values = c("red", "blue")) +
+  theme_minimal() +
+  theme(plot.background = element_rect(fill = "#F7F5DC"))+
+  scale_y_continuous(limits=c(0,5e+07))
+
+# Combine the two box plots into a single plot
+grid.arrange(box_plot_1, box_plot_2, ncol = 2)
+```
+
+#### INFERENCE
+
+* The above graph shows there is a substantial increase in the GHG emissions worldwide from year 1990 to year 2019.
+
+* The increase in Green House Gases like CO2, methane, nitrogen oxide,etc cause climate change and affects the environment in the longer turn
+
+* This also shows all the policies made till now that claims to better the situation and control on GHG emissions has in reality done nothing.
+
+
+## Agricultural land data
+### Cleaning the data
+
+```{r}
+library(knitr)
+# Reading the csv file into a data frame
+agri_df <- read.csv("C:/Users/drish/OneDrive/Desktop/R files/Datasets/Climate change/agriland.csv")
+
+# Removing first 4 rows and columns by name
+agri_df<- agri_df[-(1:4),-(3:4)]
+
+# Printing the first few rows of the data frame
+head(agri_df)
+
+# Extracting 2 columns - the data of 1990 and 2019
+cols_of_interest <- agri_df[c("Data.Source","X.2", "X.31")]
+
+# Assign the result to a new data frame
+agri1_df <- cols_of_interest
+head(agri1_df)
+```
+
+
+### Plotting the agricultural data
+```{r}
+library(knitr)
+# Removing NA values
+agri1_df<- na.omit(agri1_df)
+
+# Getting the summary
+summary(agri1_df$X.2)
+summary(agri1_df$X.31)
+
+# Plotting the agricultural land data
+# Creating Box plots 
+# Loading the ggplot2 package
+library(ggplot2)
+library(gridExtra)
+# Create the first box plot
+box_plot_1 <- ggplot(data = agri1_df, aes(x = "Data.Source", y = X.2)) +
+  geom_boxplot(fill = "#876FAD") +
+  xlab("Countries") +
+  ylab("Agricultural land in 1990") +
+  ggtitle("Agricultural land percentage") +
+  scale_fill_manual(values = c("red", "blue")) +
+  theme_minimal() +
+  theme(plot.background = element_rect(fill = "#F7F5DC"))
+
+# Create the second box plot
+box_plot_2 <- ggplot(data = agri1_df, aes(x = "Data.Source", y = X.31)) +
+  geom_boxplot(fill = "#78AD83") +
+  xlab("Countries") +
+  ylab("Agricultural land in 2019") +
+  ggtitle("Agricultural land percentage") +
+  scale_fill_manual(values = c("red", "blue")) +
+  theme_minimal() +
+  theme(plot.background = element_rect(fill = "#F7F5DC"))
+
+# Combine the two box plots into a single plot
+grid.arrange(box_plot_1, box_plot_2, ncol = 2)
+
+```
+
+#### INFERENCE 
+
+* The is a decrease in overall world land suitable to agriculture.
+
+* We see above, the boxplot comparison of agricultural land for all the countries in the years 1990 and 2019. The minimum and maximum level of agricultural land have increased and decreased respectively in 2019, as opposed to 1990. This has led to a slight decrease in the median of the percentage of agricultural land in the world as well.
+
+* Climate change has a major impact on soil, and changes in land use and soil can either accelerate or slow down climate change. Without healthier soils and a sustainable land and soil management, we cannot tackle the climate crisis, produce enough food and adapt to a changing climate.
+
+
+## Renewable Energy Consumption Data
+### Cleaning the data
+```{r}
+library(knitr)
+# Read the csv file into a data frame
+ren_df <- read.csv("C:/Users/drish/OneDrive/Desktop/R files/Datasets/Climate change/renenergy.csv")
+
+# Removing first 4 rows and columns by name
+ren_df<- ren_df[-(1:4),-(3:4)]
+
+# Print the first few rows of the data frame
+head(ren_df)
+
+# Extracting 2 columns - the data of 1990 and 2019
+cols_of_interest <- ren_df[c("Data.Source","X.2", "X.31")]
+
+# Assign the result to a new data frame
+ren1_df <- cols_of_interest
+head(ren1_df)
+```
+
+### Comparing the renewable energy consumption data (1990 Vs 2019)
+```{r}
+# Creating two separate histograms
+par(mfrow = c(1, 2),bg = "#F7F5DC")
+hist(ren1_df$X.2, main = "Renewable energy consumption in 1990", xlab = "1990", col="#EED971FF")
+hist(ren1_df$X.31 + 5, main = "Renewable energy consumption in 2019", xlab = "2019",col="#FFA351FF", ylim= c(0,100))
+```
+
+#### INFERNCE 
+
+* There is relative increase in the total renewable energy consumption but not enough to be sufficiently able to deal with climate change.
+
+* In 1990, the frequency of people using less units of renewable energy has increased overall but the frequency of people using more that 50 units of consumption has actually declined.
+
+* This again show that efforts by people and states has not been that significant.
+
+* We see above, the histograms for the consumption of renewable energy in 1990 and 2019. In 2019, renewable energy consumption only accounted for around 13.8 percent of the world's energy consumption. 
+
+* Renewable energy is an important step in mitigating climate change and reducing the consequences caused by the phenomenon.
+
+
+## Evaluating Climate change adaption and preparedness 
+### Creating the base map
+```{r}
+library(maps)
+map("world", fill=TRUE, col="#FFA781", mar=c(0,0,0,0))
+
+```
+
+### Extracting and cleaning the data
+```{r}
+# Read the csv file into a data frame
+rank_df <- read.csv("C:/Users/drish/OneDrive/Desktop/R files/Datasets/Climate change/ranks.csv")
+
+# Print the first few rows of the data frame
+head(rank_df)
+
+```
+
+### Plotting Climate risk data
+```{r}
+library(maps)
+library(ggplot2)
+library(maps)
+
+# Creating a sample data frame
+df <- rank_df[,c(1,5)]
+
+# Joining the data frame with a world map data
+map_data <- map_data("world")
+head(map_data)
+df <- left_join(df, map_data, by = c("Country.Name" = "region"))
+head(df)
+# Plotting the data on the map
+ggplot(df) + 
+  geom_map(aes(map_id = Country.Name, fill = climate_risks), map = map_data) + 
+  expand_limits(x = map_data$long, y = map_data$lat) + 
+  coord_map(projection = "mercator") + 
+  scale_fill_gradient(low = "#B9E4CF", high = "#33777D") +
+  theme_void()
+
+```
+
+#### Inference
+
+* As in the map above, we can see the risk from climate change the country faces. The darker the green colour the more risk the country is at. The legend also show the scale of risk and the respective colour shade it represents.
+
+* INDIA- as we can see India lies in the middle range when it comes to ranking countries on the basis of climate risk.
+
+### Plotting Vulnerability Data
+```{r}
+# Creating a sample data frame
+df1 <- rank_df[,c(1,7)]
+
+# Joining the data frame with a world map data
+map_data <- map_data("world")
+
+df1 <- left_join(df1, map_data, by = c("Country.Name" = "region"))
+head(df1)
+
+# Plotting the data on the map
+ggplot(df1) + 
+  geom_map(aes(map_id = Country.Name, fill = vulnerability), map = map_data) + 
+  expand_limits(x = map_data$long, y = map_data$lat) + 
+  coord_map(projection = "mercator") + 
+  scale_fill_gradient(low = "light pink", high = "maroon") +
+  theme_void()
+```
+
+#### Inference
+
+* As in the map above, we can see the risk from climate change the country faces. The darker the green colour the more risk the country is at. The legend also show the scale of risk and the respective colour shade it represents.
+
+* INDIA- As we can see(in the above one map) India lies in the middle range when it comes to ranking countries on the basis of climate risk.But as in this map, India is more vulnerable than more than 50% of the world countries. 
